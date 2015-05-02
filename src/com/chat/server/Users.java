@@ -17,7 +17,7 @@ public class Users {
 		return users;
 	}
 
-	@XmlElement
+	@XmlElement(name="user")
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
@@ -25,9 +25,9 @@ public class Users {
 	public User finUserByEmail(String email) {
 		if (users != null) {
 			for (User user : users) {
-				if (user.getEmail().equalsIgnoreCase(email)) {
+				if (user.getEmail()!=null&&user.getEmail().equalsIgnoreCase(email)) {
 					return user;
-				}
+				} 
 			}
 		}
 		return null;
@@ -38,7 +38,7 @@ public class Users {
 			users = new ArrayList();
 		}
 		users.add(user);
-		return user;
+ 		return user;
 	}
 	
 	

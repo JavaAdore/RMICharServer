@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.chat.server.utils.Utils;
+
 @XmlRootElement
-public class User implements Serializable {
+public class User implements Serializable, Cloneable {
 
 	/**
 	 * 
@@ -45,31 +48,33 @@ public class User implements Serializable {
 	private SubscriptionType subscriptionType;
 
 	private Gender gender;
-
+	
+	private String country;
+	
 	private List<String> keywords;
 
-	private List<String> hobbies;
+	private List<Hobies> hobbies;
 
 	private Integer birthYear;
 
 	public List<String> getKeywords() {
 		return keywords;
 	}
-
-	@XmlAttribute(required = true)
+     
+	@XmlElement(required = true)
 	public void setKeywords(List<String> keywords) {
 		this.keywords = keywords;
 	}
 
-	public List<String> getHobbies() {
+	public List<Hobies> getHobbies() {
 		return hobbies;
 	}
 
-	@XmlAttribute(required = true)
-	public void setHobbies(List<String> hobbies) {
+	@XmlElement
+	public void setHobbies(List<Hobies> hobbies) {
 		this.hobbies = hobbies;
 	}
-
+	
 	public Integer getBirthYear() {
 		return birthYear;
 	}
@@ -108,6 +113,17 @@ public class User implements Serializable {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
+	
+	@XmlAttribute
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
+
+	public String getCountry() {
+		return country;
+	}
+	
 
 	public Gender getGender() {
 		return gender;
@@ -147,8 +163,6 @@ public class User implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
 		User other = (User) obj;
 		if (email == null) {
 			if (other.email != null)
@@ -157,5 +171,18 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	
+	@Override
+	public User clone()
+	{
+		try {
+			return (User)super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
+	
+	
 }

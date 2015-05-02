@@ -1,6 +1,7 @@
 package com.chat.common;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Message implements Serializable {
 
@@ -12,6 +13,10 @@ public class Message implements Serializable {
 
 	
 	private String email;
+	
+	private String sender;
+	
+	private Date sendingDate;
 	
 	public String getEmail() {
 		return email;
@@ -37,6 +42,24 @@ public class Message implements Serializable {
 	public void setMessageText(String messageText) {
 		this.messageText = messageText;
 	}
+
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+
+	public Date getSendingDate() {
+		return sendingDate;
+	}
+
+	public void setSendingDate(Date sendingDate) {
+		this.sendingDate = sendingDate;
+	}
+	
+	
 	
 	
 }

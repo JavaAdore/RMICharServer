@@ -1,6 +1,8 @@
 package com.chat.common;
 
-public class Feedback {
+import java.io.Serializable;
+
+public class Feedback implements Serializable {
 
 	public static final Integer SUCCESS = 0;
 

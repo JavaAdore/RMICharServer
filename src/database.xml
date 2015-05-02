@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user  credit="250.0" email="mahmoud@gmail.com" password="123456" subscriptionType="vip" userName="mahmoud">
+        <hobbies>Swimming</hobbies>
+        <hobbies>Songs</hobbies>
+        <hobbies>Football</hobbies>
+        <hobbies>Siging</hobbies>
+        <hobbies>Tennis</hobbies>
+        <keywords>test</keywords>
+    </user>
+</users>

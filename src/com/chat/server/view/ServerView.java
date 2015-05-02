@@ -8,4 +8,9 @@ public interface ServerView {
 	
 	public void userLoggedOut(UserDTO userDTO);
 	
+	
+	public void setPortNumber(int portNumber);
+	
+	public void setServiceName(String serviceName);
+	
 }

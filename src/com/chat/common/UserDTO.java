@@ -6,11 +6,14 @@ public class UserDTO extends User{
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	
 	
 	private ClientInt clientInt;
+	
+	
 
 	public ClientInt getClientInt() {
 		return clientInt;
@@ -25,6 +28,10 @@ public class UserDTO extends User{
 		return super.getEmail();
 	}
 
+	
+
+	
+	
 	
 	
 	

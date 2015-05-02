@@ -2,7 +2,9 @@ package com.chat.server.business;
 
 import java.rmi.RemoteException;
 
+import com.chat.common.Feedback;
 import com.chat.common.ServerInt;
+import com.chat.common.User;
 import com.chat.common.UserDTO;
 import com.chat.server.view.ServerView;
 
@@ -48,7 +50,7 @@ public class ServerController  {
 		
 			
 	}
-
+	
 	
 	
 	
