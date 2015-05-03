@@ -24,4 +24,6 @@ public interface ServerInt extends Serializable, Remote {
             List<String> blackList) throws RemoteException;;
             
      public Feedback sendMessageAsEmail(Message message) throws RemoteException;       
+     
+     public void ping() throws RemoteException;
 }

@@ -50,6 +50,10 @@ public class ServerController  {
 		
 			
 	}
+	public void setOccupiedPort(int pORT_NUMBER) {
+		view.setPortNumber(pORT_NUMBER);
+		
+	}
 	
 	
 	

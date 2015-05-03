@@ -17,7 +17,7 @@ import com.chat.common.UserDTO;
 import com.chat.server.business.ServerController;
 
 public class ServerForm extends JFrame implements ServerView {
-
+ 
 	/**
 	 * 
 	 */
@@ -29,7 +29,7 @@ public class ServerForm extends JFrame implements ServerView {
 	private DefaultListModel<UserDTO> model;
 	
 	private JLabel portNumber  ;
-	private JLabel serviceName;
+	private JLabel portNumberLabel;
 	
 	
 	public  ServerForm(final ServerController controller) {
@@ -58,10 +58,14 @@ public class ServerForm extends JFrame implements ServerView {
 		model = new DefaultListModel();
 		jList = new JList(model);
 		portNumber = new JLabel();
-		serviceName = new JLabel();
+		portNumberLabel = new JLabel("Server Port Is ");
+		
 		
 		getContentPane().setLayout(new BorderLayout());
+		getContentPane().add(portNumberLabel,BorderLayout.NORTH);
+		getContentPane().add(portNumber,BorderLayout.CENTER);
 		setVisible(true);
+		setResizable(false);
 
 	}
 
@@ -100,10 +104,5 @@ public class ServerForm extends JFrame implements ServerView {
 		
 	}
 
-	@Override
-	public void setServiceName(String serviceName) {
-		this.serviceName.setText(serviceName);
-		
-	}
 
 }

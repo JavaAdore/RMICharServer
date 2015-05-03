@@ -17,6 +17,8 @@ public class Message implements Serializable {
 	private String sender;
 	
 	private Date sendingDate;
+        
+        private UserDTO senderDTO;
 	
 	public String getEmail() {
 		return email;
@@ -58,8 +60,15 @@ public class Message implements Serializable {
 	public void setSendingDate(Date sendingDate) {
 		this.sendingDate = sendingDate;
 	}
-	
-	
-	
-	
+
+
+    public void setSenderDTO(UserDTO senderDTO) {
+        this.senderDTO = senderDTO;
+    }
+
+    public UserDTO getSenderDTO() {
+        return senderDTO;
+    }
+
+
 }

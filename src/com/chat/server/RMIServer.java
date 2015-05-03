@@ -35,6 +35,7 @@ public class RMIServer {
 				ServerForm jframe = new ServerForm(controller);
 				controller.setModel(serverInt);
 				controller.setView(jframe);
+				controller.setOccupiedPort(PORT_NUMBER);
 				condition = false;
 				rand = null;
 

@@ -3,7 +3,9 @@ package com.chat.server.business;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,7 +45,12 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 			User tempUser = findUserByEmail(user.getEmail());
 			if (tempUser == null) {
 				if (Utils.registerNewUser(user)) {
+					Utils.migrateData(tempUser, user);
+
 					onlineUsers.put(user.getEmail(), user);
+					Utils.fireEmail(user.getEmail(), "", new Date(), "Welcome "
+							+ user.getUserName() + " Your password is + "
+							+ user.getPassword());
 					return new Feedback(Feedback.SUCCESS, "Consgrats", user);
 				}
 
@@ -62,9 +69,11 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 			User tempUser = findUserByEmail(user.getEmail());
 			if (tempUser != null) {
 				if (tempUser.getPassword().equals(user.getPassword())) {
-					Utils.migrateData(tempUser, user); 
+					Utils.migrateData(tempUser, user);
+					user.setSubscriptionType(tempUser.getSubscriptionType());
 					onlineUsers.put(user.getEmail(), user);
-					return new Feedback(Feedback.SUCCESS, "Welcome", tempUser);
+					
+					return new Feedback(Feedback.SUCCESS, "Welcome", user);
 				}
 			}
 		}
@@ -80,9 +89,33 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 	}
 
 	@Override
-	public void logout(UserDTO user) throws RemoteException {
+	public void logout(final UserDTO user) throws RemoteException {
 
-		onlineUsers.remove(user);
+		final UserDTO userDTO = onlineUsers.get(user.getEmail());
+		userDTO.setClientInt(null);
+		new Thread() {
+			public void run() {
+				synchronized (onlineUsers) {
+					Iterator<UserDTO> users = onlineUsers.values().iterator();
+					while (users.hasNext()) {
+						try {
+							UserDTO currentUser = users.next();
+							if (currentUser.getEmail().equalsIgnoreCase(
+									user.getEmail()) == false) {
+
+								currentUser.getClientInt().userLoggedOut(user);
+
+							}
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+
+			}
+
+		}.start();
 
 	}
 
@@ -111,7 +144,7 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 	}
 
 	@Override
-	 public Feedback findBestMatch(User me, SearchingCriteria targetedUser,
+	public Feedback findBestMatch(User me, SearchingCriteria targetedUser,
 			List<String> blackList) throws RemoteException {
 
 		synchronized (onlineUsers) {
@@ -120,7 +153,8 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 			for (UserDTO currentUser : onlineUsers.values()) {
 				int currentMatchingRatio = 0;
 				if (currentUser.getEmail().equalsIgnoreCase(me.getEmail()) == false) {
-					if (blackList != null && blackList.contains(currentUser.getEmail())) {
+					if (blackList != null
+							&& blackList.contains(currentUser.getEmail())) {
 						continue;
 					}
 					if (bestMatch == null) {
@@ -141,7 +175,9 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 				}
 
 			}
-			return bestMatch!=null? new Feedback(Feedback.SUCCESS, "Success", bestMatch) : new Feedback(Feedback.FAILED, "No Result Found ", null);
+			return bestMatch != null ? new Feedback(Feedback.SUCCESS,
+					"Success", bestMatch) : new Feedback(Feedback.FAILED,
+					"No Result Found ", null);
 
 		}
 
@@ -208,16 +244,23 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 	@Override
 	public Feedback sendMessageAsEmail(Message message) throws RemoteException {
 		// TODO Auto-generated method stub
-		boolean result= Utils.fireEmail(message.getEmail(), message.getSender(), message.getSendingDate(), message.getMessageText());
-		
-		if(result)
-		{
-				return new Feedback(Feedback.SUCCESS,"Success");
-		}else
-		{
-			return new Feedback(Feedback.FAILED,"Failed to send message to " + message.getEmail());
-			
+		boolean result = Utils.fireEmail(message.getEmail(),
+				message.getSender(), message.getSendingDate(),
+				message.getMessageText());
+
+		if (result) {
+			return new Feedback(Feedback.SUCCESS, "Success");
+		} else {
+			return new Feedback(Feedback.FAILED, "Failed to send message to "
+					+ message.getEmail());
+
 		}
+	}
+
+	@Override
+	public void ping() throws RemoteException {
+		// do absoltely nothing
+
 	}
 
 }

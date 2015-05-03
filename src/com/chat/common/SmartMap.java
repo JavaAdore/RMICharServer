@@ -26,7 +26,10 @@ public class SmartMap extends HashMap<String, UserDTO> {
 				public void run() {
 					if (curUser.equals(user) == false) {
 						try {
-							curUser.getClientInt().userLoggedIn(user);
+							if(curUser.getClientInt()!=null)
+							{
+								curUser.getClientInt().userLoggedIn(user);
+							}
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

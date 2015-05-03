@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <users>
-    <user credit="150.0" email="mohab@gmail.com" password="123456" subscriptionType="blind" userName="mohab"/>
-    <user country="732" credit="250.0" email="mahmoud@gmail.com" gender="male" password="123456" subscriptionType="vip" userName="mahmoud">
+    <user credit="250.0" email="mahmoud.eltaieb@gmail.com" password="123456" subscriptionType="vip" userName="mahmoud">
         <hobbies>Swimming</hobbies>
         <hobbies>Songs</hobbies>
         <hobbies>Football</hobbies>
@@ -9,4 +8,6 @@
         <hobbies>Tennis</hobbies>
         <keywords>test</keywords>
     </user>
+    <user credit="123456.0" email="marwan@gmail.com" password="123456" subscriptionType="blind" userName="marwan"/>
+    <user credit="123456.0" email="mohab@gmail.com" gender="male" password="123456" subscriptionType="blind" userName="mohab"/>
 </users>
