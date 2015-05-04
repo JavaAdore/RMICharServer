@@ -13,5 +13,7 @@ public interface ClientInt extends Serializable,Remote {
 	void userLoggedIn(UserDTO user) throws RemoteException;
 
 	void userLoggedOut(UserDTO user) throws RemoteException;
+	
+	void cick() throws RemoteException;
 
 }

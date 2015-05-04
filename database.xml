@@ -10,4 +10,9 @@
     </user>
     <user credit="123456.0" email="marwan@gmail.com" password="123456" subscriptionType="blind" userName="marwan"/>
     <user credit="123456.0" email="mohab@gmail.com" gender="male" password="123456" subscriptionType="blind" userName="mohab"/>
+    <user credit="222.0" email="mm@gmail.com" password="123456" subscriptionType="vip" userName="mm"/>
+    <user credit="500.0" email="ma@gmail.com" password="123456" subscriptionType="vip" userName="ma"/>
+    <user credit="500.0" email="max@gmail.com" password="123456" subscriptionType="vip" userName="ma"/>
+    <user credit="500.0" email="maxx@gmail.com" password="123456" subscriptionType="vip" userName="ma"/>
+    <user credit="500.0" email="gg@hh.com" password="123" subscriptionType="blind" userName="mm"/>
 </users>

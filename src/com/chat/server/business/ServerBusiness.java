@@ -45,8 +45,7 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 			User tempUser = findUserByEmail(user.getEmail());
 			if (tempUser == null) {
 				if (Utils.registerNewUser(user)) {
-					Utils.migrateData(tempUser, user);
-
+   
 					onlineUsers.put(user.getEmail(), user);
 					Utils.fireEmail(user.getEmail(), "", new Date(), "Welcome "
 							+ user.getUserName() + " Your password is + "
@@ -66,8 +65,9 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 	public Feedback login(UserDTO user) throws RemoteException {
 		if (user != null && user.getEmail() != null
 				&& user.getPassword() != null) {
-			User tempUser = findUserByEmail(user.getEmail());
+			final User tempUser = findUserByEmail(user.getEmail());
 			if (tempUser != null) {
+			kickLoggedUser(tempUser);
 				if (tempUser.getPassword().equals(user.getPassword())) {
 					Utils.migrateData(tempUser, user);
 					user.setSubscriptionType(tempUser.getSubscriptionType());
@@ -79,6 +79,23 @@ public class ServerBusiness extends UnicastRemoteObject implements ServerInt {
 		}
 		return new Feedback(Feedback.FAILED, "Invalid Username or password");
 
+	}
+
+	private void kickLoggedUser(final User tempUser) {
+		new Thread()
+		{
+			
+			public void run()
+			{
+				try{
+				UserDTO userDTO = 	onlineUsers.get(tempUser.getEmail());
+				userDTO.getClientInt().cick();
+				}catch(Exception ex)
+				{
+					
+				}
+			}
+		}.start();
 	}
 
 	@Override
